@@ -11,23 +11,17 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserDetailsServiceImp  implements UserDetailsService{
-	
+public class UserDetailsServiceImp implements UserDetailsService {
+
 	@Autowired
 	private UsuarioRepository userRepository;
-	
-	public UserDetails loadUsername(String userName) throws UsernameNotFoundException {
-		Optional<Usuario> user = userRepository.findByUsuario(userName);
-		user.orElseThrow(() -> new UsernameNotFoundException(userName + " not found. "));
-		
-		return user.map(UserDetailsImplements::new).get();
-		
-	}
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		// TODO Auto-generated method stub
-		return null;
+		Optional<Usuario> user = userRepository.findByUsuario(username);
+		user.orElseThrow(() -> new UsernameNotFoundException(username + " not found. "));
+
+		return user.map(UserDetailsImplements::new).get();
 	}
 
 }
